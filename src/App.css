@@ -7,6 +7,26 @@
   pointer-events: none;
 }
 
+.board {
+  margin: auto;
+  height: auto;
+  border-spacing: 0px;
+  border: 3px solid black;
+  border-collapse: collapse;
+}
+
+.tile {
+  margin: auto;
+  height: auto;
+  width: auto;
+  border: 1px solid black
+}
+
+.image-container {
+  padding: 0px;
+  font-size: 0px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
