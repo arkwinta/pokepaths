@@ -8,7 +8,6 @@ export function getDirections(request) {
             'content-type': "application/json; charset=utf-8"
         }
     }).then(response => {
-        console.log(response)
-        return response
+        return response.data
     })
 }

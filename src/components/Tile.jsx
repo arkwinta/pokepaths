@@ -37,9 +37,8 @@ class Tile extends React.Component {
                 imageSrc = Finish
                 break;
             case TILE_STATUS.AVAILABLE:
-                imageSrc = Grass
-                break;
             default:
+                imageSrc = Grass
                 break;
         }
 
@@ -49,8 +48,10 @@ class Tile extends React.Component {
 
     render() {
         return (
-            <td className="image-container" onClick={() => this.props.updateTileMethod(this.props.xCoord, this.props.yCoord, this.props.status)}>
+            <td className="image-container" onClick={() => this.props.updateTileMethod()}>
+                <span />
                 <img className="tile" src={this.determineImage(this.props.status)} alt={this.props.status} />
+                <span />
             </td>
         )
     }

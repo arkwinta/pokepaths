@@ -60,10 +60,10 @@ class Board extends React.Component {
         let x;
         let y;
         this.state.grid.map((rows, rowIndex) => {
-            const columnIndex = rows.findIndex(el => el === startOrFinish)
-            if (columnIndex > -1) {
-                x = rowIndex
-                y = columnIndex
+            const index = rows.findIndex(el => el === startOrFinish)
+            if (index > -1) {
+                x = index
+                y = rowIndex
             }
         })
         return { x, y }
@@ -74,7 +74,7 @@ class Board extends React.Component {
         this.state.grid.map((rows, rowIndex) => {
             rows.map((state, index) => {
                 if (state === TILE_STATUS.OBSTRUCTED) {
-                    coords.push({ x: rowIndex, y: index })
+                    coords.push({ x: index, y: rowIndex })
                 }
             })
         })
@@ -90,7 +90,7 @@ class Board extends React.Component {
             startingLoc: this.getCoordinates(TILE_STATUS.START),
             endingLoc: this.getCoordinates(TILE_STATUS.FINISH)
         }
-        getDirections(request)
+        const solutionPath = getDirections(request)
     }
 
 
@@ -104,7 +104,12 @@ class Board extends React.Component {
                             return (
                                 <tr>
                                     {rows.map((tile, index) => {
-                                        return (<Tile status={rows[index]} xCoord={index} yCoord={rowIndex} updateTileMethod={this.updateTile} />)
+                                        return (
+                                            <Tile
+                                                status={rows[index]}
+                                                updateTileMethod={() => this.updateTile(index, rowIndex, rows[index])}
+                                            />
+                                        )
                                     })}
                                 </tr>
                             )
