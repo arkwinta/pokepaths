@@ -83,14 +83,15 @@ class Board extends React.Component {
 
 
 
-    handleSubmit() {
+    async handleSubmit() {
         const request = {
             sideLength: this.props.length,
             impassables: this.getImpassibles(),
             startingLoc: this.getCoordinates(TILE_STATUS.START),
             endingLoc: this.getCoordinates(TILE_STATUS.FINISH)
         }
-        const solutionPath = getDirections(request)
+        const solutionPath = await getDirections(request)
+        console.log(solutionPath)
     }
 
 
