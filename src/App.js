@@ -1,14 +1,11 @@
 import './App.css';
-import Board from './containers/Board'
+import Content from './containers/Content'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          What are the dimensions of your map?
-        </p>
-        <Board height={3} width={4} />
+        <Content />
       </header>
     </div>
   );

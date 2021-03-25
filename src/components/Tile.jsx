@@ -13,9 +13,10 @@ import Rock from '../images/rocktile.png'
 class Tile extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {}
     }
 
-    determineState(status) {
+    determineImage(status) {
         let imageSrc
         switch (status) {
             case "Obstructed":
@@ -27,8 +28,10 @@ class Tile extends React.Component {
             case "Finish":
                 imageSrc = Finish
                 break;
-            default:
+            case "Available":
                 imageSrc = Grass
+                break;
+            default:
         }
         return imageSrc
 
@@ -36,8 +39,8 @@ class Tile extends React.Component {
 
     render() {
         return (
-            <td className="image-container">
-                <img className="tile" src={this.determineState(this.props.status)} />
+            <td className="image-container" onClick={() => this.props.updateTileMethod(this.props.xCoord, this.props.yCoord, this.props.status)}>
+                <img className="tile" src={this.determineImage(this.props.status)} />
             </td>
         )
     }
