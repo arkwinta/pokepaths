@@ -1,5 +1,5 @@
 import React from 'react';
-import Tile from '../components/Tile'
+import Tile, { TILE_STATUS } from '../components/Tile'
 import { getDirections } from '../services/submit'
 
 class Board extends React.Component {
@@ -14,18 +14,18 @@ class Board extends React.Component {
         // the pattern for cycling through tile states when clicked
         let nextState
         switch (state) {
-            case "Available":
-                nextState = "Obstructed"
+            case TILE_STATUS.AVAILABLE:
+                nextState = TILE_STATUS.OBSTRUCTED
                 break;
-            case "Obstructed":
-                nextState = "Start"
+            case TILE_STATUS.OBSTRUCTED:
+                nextState = TILE_STATUS.START
                 break;
-            case "Start":
-                nextState = "Finish"
+            case TILE_STATUS.START:
+                nextState = TILE_STATUS.FINISH
                 break;
-            case "Finish":
+            case TILE_STATUS.FINISH:
             default:
-                nextState = "Available"
+                nextState = TILE_STATUS.AVAILABLE
         }
         return nextState
     }
@@ -45,7 +45,7 @@ class Board extends React.Component {
         // if the length of the grid is 0, or is different than the last one we need a new board
         if (this.state.grid.length === 0 || this.props.length !== prevProps.length) {
             this.setState({
-                grid: Array(this.props.length).fill(0).map(element => Array(this.props.length).fill("Available"))
+                grid: Array(this.props.length).fill(0).map(element => Array(this.props.length).fill(TILE_STATUS.AVAILABLE))
             })
         }
     }
@@ -73,7 +73,7 @@ class Board extends React.Component {
         const coords = [];
         this.state.grid.map((rows, rowIndex) => {
             rows.map((state, index) => {
-                if (state === "Obstructed") {
+                if (state === TILE_STATUS.OBSTRUCTED) {
                     coords.push({ x: rowIndex, y: index })
                 }
             })
@@ -87,8 +87,8 @@ class Board extends React.Component {
         const request = {
             sideLength: this.props.length,
             impassables: this.getImpassibles(),
-            startingLoc: this.getCoordinates("Start"),
-            endingLoc: this.getCoordinates("Finish")
+            startingLoc: this.getCoordinates(TILE_STATUS.START),
+            endingLoc: this.getCoordinates(TILE_STATUS.FINISH)
         }
         getDirections(request)
     }

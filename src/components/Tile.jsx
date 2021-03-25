@@ -10,6 +10,14 @@ import Rock from '../images/rocktile.png'
 // start - S
 // path - line calculation? based on the API response
 // end 
+export const TILE_STATUS = {
+    OBSTRUCTED: "Obtructed",
+    START: "Start",
+    AVAILABLE: "Available",
+    FINISH: "Finish",
+    PATH: "Path"
+}
+
 class Tile extends React.Component {
     constructor(props) {
         super(props)
@@ -19,20 +27,22 @@ class Tile extends React.Component {
     determineImage(status) {
         let imageSrc
         switch (status) {
-            case "Obstructed":
+            case TILE_STATUS.OBSTRUCTED:
                 imageSrc = Rock
                 break;
-            case "Start":
+            case TILE_STATUS.START:
                 imageSrc = Start
                 break;
-            case "Finish":
+            case TILE_STATUS.FINISH:
                 imageSrc = Finish
                 break;
-            case "Available":
+            case TILE_STATUS.AVAILABLE:
                 imageSrc = Grass
                 break;
             default:
+                break;
         }
+
         return imageSrc
 
     }
@@ -40,7 +50,7 @@ class Tile extends React.Component {
     render() {
         return (
             <td className="image-container" onClick={() => this.props.updateTileMethod(this.props.xCoord, this.props.yCoord, this.props.status)}>
-                <img className="tile" src={this.determineImage(this.props.status)} />
+                <img className="tile" src={this.determineImage(this.props.status)} alt={this.props.status} />
             </td>
         )
     }
