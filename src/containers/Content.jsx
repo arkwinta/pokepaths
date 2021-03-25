@@ -20,7 +20,6 @@ export default class Content extends React.Component {
     }
 
     render() {
-        console.log(this.state.length)
         return (
             <div>
                 <p>

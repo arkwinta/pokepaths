@@ -1,5 +1,6 @@
 import React from 'react';
 import Tile from '../components/Tile'
+import { getDirections } from '../services/submit'
 
 class Board extends React.Component {
     constructor(props) {
@@ -55,6 +56,43 @@ class Board extends React.Component {
         // this function could be used to set the disabled state, by mapping through the rows, and running "finds"
     }
 
+    getCoordinates(startOrFinish) {
+        let x;
+        let y;
+        this.state.grid.map((rows, rowIndex) => {
+            const columnIndex = rows.findIndex(el => el === startOrFinish)
+            if (columnIndex > -1) {
+                x = rowIndex
+                y = columnIndex
+            }
+        })
+        return { x, y }
+    }
+
+    getImpassibles() {
+        const coords = [];
+        this.state.grid.map((rows, rowIndex) => {
+            rows.map((state, index) => {
+                if (state === "Obstructed") {
+                    coords.push({ x: rowIndex, y: index })
+                }
+            })
+        })
+        return coords
+    }
+
+
+
+    handleSubmit() {
+        const request = {
+            sideLength: this.props.length,
+            impassables: this.getImpassibles(),
+            startingLoc: this.getCoordinates("Start"),
+            endingLoc: this.getCoordinates("Finish")
+        }
+        getDirections(request)
+    }
+
 
 
     render() {
@@ -66,7 +104,6 @@ class Board extends React.Component {
                             return (
                                 <tr>
                                     {rows.map((tile, index) => {
-                                        console.log(rows[index])
                                         return (<Tile status={rows[index]} xCoord={index} yCoord={rowIndex} updateTileMethod={this.updateTile} />)
                                     })}
                                 </tr>
@@ -74,7 +111,7 @@ class Board extends React.Component {
                         })}
                     </tbody>
                 </table>
-                <button onClick={() => console.log('youre being helped')}> Help me! </button>
+                <button onClick={() => this.handleSubmit()}> Help me! </button>
             </div>
 
         )
