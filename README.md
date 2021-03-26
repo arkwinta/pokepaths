@@ -1,3 +1,24 @@
+# Welcome to Pokepaths!
+
+
+To get started, ensure you have the most recent version of node - then run `npm install` . Once that has completed, get the app going by running `npm start` and the app is served at [http://localhost:3000](http://localhost:3000)
+
+## Notes
+I'd like to address somethings I didn't have the opportunity to incorporate directly into the project at this point, but lots of considerations were made and I'd like to call some out: 
+
+### Testing
+
+I've added a cypress directory where I would plan on adding some tests.
+I'd set up a board preloaded with a special `mockState` . This would be a board configuration, that when submitted to the find-path endpoint, would return directions that would be parsed for every valid state (thinking specifically of the changing direction tiles). I would use that response body as a mock response, and we'd have a self-contained test suite to kick the tires of our app without any external interference. If our test suite passed, but there is a production issue,the problem diagnosis time can be greatly reduced by knowing the front-end is uncompromised. Our tests _wont_ fail if the API changes - but we can leverage pact testing for that if it is a concern :)
+
+### Accessibility 
+
+We took some accessibility considerations here for visually impaired Pokemon, but there would be plenty more validation required before we can feel adequately ADA/WCAG compliant. However, it is a start and is usable by them in it's current state, and we want to start helping all Pokemon as soon as we can, as opposed to holding back the product until it is perfect. 
+
+##############
+
+Generic CRA content:
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
