@@ -1,13 +1,15 @@
 import React from 'react';
-import { TILE_STATUS } from '../config/const'
+import { TILE_STATUS, GENERIC_ERROR_MESSAGE } from '../config/const'
 import { getDirections } from '../services/submit'
 import Tile from '../components/rfacTile'
+import ErrorMessage from '../components/ErrorMessage'
 
 class Board extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             grid: [],
+            errorMessage: "",
         }
     }
 
@@ -46,7 +48,8 @@ class Board extends React.Component {
         // if the length of the grid is 0, or is different than the last one we need a new board
         if (this.state.grid.length === 0 || this.props.length !== prevProps.length) {
             this.setState({
-                grid: Array(this.props.length).fill(0).map(element => Array(this.props.length).fill(TILE_STATUS.AVAILABLE))
+                grid: Array(this.props.length).fill(0).map(element => Array(this.props.length).fill(TILE_STATUS.AVAILABLE)),
+                errorMessage: "",
             })
         }
     }
@@ -57,7 +60,15 @@ class Board extends React.Component {
         // this function could be used to set the disabled state, by mapping through the rows, and running "finds"
     }
 
-    parseInstructions(direction, coordinates) {
+    setErrorMessage(message) {
+        this.setState({
+            errorMessage: message
+        })
+    }
+
+    getNextCoordinate(direction, coordinates) {
+        // the response object comes in the form of directions
+        // starting from the initial position of the pokemon
         const { x, y } = coordinates
         let nextX = x
         let nextY = y
@@ -92,7 +103,7 @@ class Board extends React.Component {
 
         for (let i = 0; i < path.length; i++) {
             let newState
-            let newCoordinate = this.parseInstructions(path[i], { x: currentX, y: currentY })
+            let newCoordinate = this.getNextCoordinate(path[i], { x: currentX, y: currentY })
 
             if (i + 1 === path.length) {
                 // we need n-1 combinations
@@ -149,21 +160,29 @@ class Board extends React.Component {
 
 
     async handleSubmit() {
+        const start = this.getCoordinates(TILE_STATUS.START)
         const request = {
             sideLength: this.props.length,
             impassables: this.getImpassibles(),
-            startingLoc: this.getCoordinates(TILE_STATUS.START),
+            startingLoc: start,
             endingLoc: this.getCoordinates(TILE_STATUS.FINISH)
         }
-        const solutionPath = await getDirections(request)
-        this.buildMap(this.getCoordinates(TILE_STATUS.START), solutionPath)
+        let response
+        try {
+            response = await getDirections(request)
+        } catch (e) {
+            console.log(e)
+            this.setErrorMessage(GENERIC_ERROR_MESSAGE)
+        }
+        if (response && response.moves) {
+            this.buildMap(start, response.moves)
+        }
     }
-
-
 
     render() {
         return (
             <div>
+                {this.state.errorMessage.length ? <ErrorMessage message={this.state.errorMessage} /> : null}
                 <table className="board">
                     <tbody>
                         {this.state.grid.map((rows, rowIndex) => {
@@ -184,7 +203,6 @@ class Board extends React.Component {
                 </table>
                 <button onClick={() => this.handleSubmit()}> Help me! </button>
             </div>
-
         )
     }
 }

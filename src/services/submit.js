@@ -7,5 +7,5 @@ export async function getDirections(request) {
             'content-type': "application/json; charset=utf-8"
         }
     })
-    return response.data.moves
+    return response.data
 }
