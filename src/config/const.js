@@ -1,6 +1,7 @@
 // a reasonable limit to prevent crashing 
 export const MAX_MAP_SIZE = "100"
 
+export const GENERIC_ERROR_MESSAGE = "Path cannot be found, a rescue squad must be dispatched"
 
 // all states the tiles can be in
 // each are tied to an image

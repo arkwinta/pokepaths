@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from '../containers/Board'
+import { HelperText } from '../components/helperText'
 import { MAX_MAP_SIZE } from '../config/const'
 
 export default class Content extends React.Component {
@@ -37,6 +38,7 @@ export default class Content extends React.Component {
                     max={MAX_MAP_SIZE}
                 />
                 <Board length={this.state.length} />
+                {this.state.length > 0 ? <HelperText /> : null}
             </div>
         )
     }
