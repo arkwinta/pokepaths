@@ -56,6 +56,70 @@ class Board extends React.Component {
         // this function could be used to set the disabled state, by mapping through the rows, and running "finds"
     }
 
+    parseInstructions(direction, coordinates) {
+        const { x, y } = coordinates
+        let nextX = x
+        let nextY = y
+        switch (direction) {
+            case "U":
+                nextY = y - 1
+                break;
+            case "D":
+                nextY = y + 1
+                break
+            case "L":
+                nextX = x - 1
+                break;
+            case "R":
+                nextX = x + 1
+                break
+            default:
+                nextX = 0
+                nextY = 0
+                break
+
+        }
+
+        return { nextX, nextY }
+    }
+
+    buildMap(startPoint, path) {
+        const gridClone = [...this.state.grid]
+        const { x, y } = startPoint
+        let currentX = x
+        let currentY = y
+
+        for (let i = 0; i < path.length; i++) {
+            let newState
+            let newCoordinate = this.parseInstructions(path[i], { x: currentX, y: currentY })
+
+            if (i + 1 === path.length) {
+                // we need n-1 combinations
+            } else {
+                // as we combine movements to dictate what the tiles themselves should render
+                newState = `${path[i]}${path[i + 1]}`
+            }
+            // consolidate redundant movements into a singular tile
+            if (newState === "UU" || newState === "DD") {
+                newState = "VERTICAL_PATH"
+            } else if (newState === "LL" || newState === "RR") {
+                newState = "HORIZONTAL_PATH"
+            }
+            // if there is a new valid state we want to update the state
+            if (newState) {
+                gridClone[newCoordinate.nextY][newCoordinate.nextX] = newState
+                // increment the coordinates to get the next step
+                currentX = newCoordinate.nextX
+                currentY = newCoordinate.nextY
+            }
+        }
+        // update the GUI
+        this.setState({
+            grid: gridClone,
+        })
+
+    }
+
     getCoordinates(startOrFinish) {
         let x;
         let y;
@@ -91,7 +155,7 @@ class Board extends React.Component {
             endingLoc: this.getCoordinates(TILE_STATUS.FINISH)
         }
         const solutionPath = await getDirections(request)
-        console.log(solutionPath)
+        this.buildMap(this.getCoordinates(TILE_STATUS.START), solutionPath)
     }
 
 
