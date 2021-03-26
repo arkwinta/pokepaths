@@ -8,22 +8,22 @@ export const HelperText = () => (
         <div>
             Click the tiles to make the map reflect your situation!
         </div>
-        <div class="key-text">
+        <div class="key-container">
             <img src={Grass} class="image-key" />
             Grass indicates a tile is available to be traversed
         </div>
         <br />
-        <div class="key-text">
+        <div class="key-container">
             <img src={Rock} class="image-key" />
             Stone indicates tiles that are impassable
         </div>
         <br />
-        <div class="key-text">
+        <div class="key-container">
             <img src={Start} class="image-key" />
             YOU ARE HERE
         </div>
         <br />
-        <div class="key-text">
+        <div class="key-container">
             <img src={Finish} class="image-key" />
             The checkered box is your destination
         </div>
