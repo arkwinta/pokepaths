@@ -7,7 +7,7 @@ const Tile = ({
     return (
         <td className="image-container" onClick={() => updateTileMethod()}>
             <span />
-            <img className="tile" src={determineImage(status)} alt={status} />
+            <img className="tile" src={determineImage(status)} alt={status.length === 2 ? "Path" : status} />
             <span />
         </td>
     )
