@@ -1,6 +1,7 @@
 import React from 'react';
-import Tile, { TILE_STATUS } from '../components/Tile'
+import { TILE_STATUS } from '../config/const'
 import { getDirections } from '../services/submit'
+import Tile from '../components/rfacTile'
 
 class Board extends React.Component {
     constructor(props) {

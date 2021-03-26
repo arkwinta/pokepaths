@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from '../containers/Board'
+import { MAX_MAP_SIZE } from '../config/const'
 
 export default class Content extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ export default class Content extends React.Component {
                     className="length-input"
                     type="number"
                     min="1"
-                    max="100"
+                    max={MAX_MAP_SIZE}
                 />
                 <Board length={this.state.length} />
             </div>
