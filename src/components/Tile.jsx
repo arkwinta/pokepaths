@@ -3,6 +3,12 @@ import Start from '../images/bulbasaur.png'
 import Finish from '../images/finishtile.png'
 import Grass from '../images/grasstile.png'
 import Rock from '../images/rocktile.png'
+import GrassTileHorizontal from '../images/grasstileHorizontal.png'
+import GrassTileVertical from '../images/grasstileVertical.png'
+import DR from '../images/grasstileDR.png'
+import DL from '../images/grasstileDL.png'
+import RD from '../images/grasstileRD.png'
+import UR from '../images/grasstileUR.png'
 
 // has a status prop to determine what is rendered
 // available - A
@@ -11,11 +17,20 @@ import Rock from '../images/rocktile.png'
 // path - line calculation? based on the API response
 // end 
 export const TILE_STATUS = {
-    OBSTRUCTED: "Obtructed",
-    START: "Start",
-    AVAILABLE: "Available",
-    FINISH: "Finish",
-    PATH: "Path"
+    OBSTRUCTED: "OBSTRUCTED",
+    START: "START",
+    AVAILABLE: "AVAILABLE",
+    FINISH: "FINISH",
+    HORIZONTAL: "HORIZONTAL_PATH",
+    VERTICAL: "VERTICAL_PATH",
+    DR: "DR",
+    DL: "DL",
+    UR: "UR",
+    UL: "UL",
+    RD: "RD",
+    RU: "RU",
+    LU: "LU",
+    LD: "LD"
 }
 
 class Tile extends React.Component {
@@ -37,8 +52,32 @@ class Tile extends React.Component {
                 imageSrc = Finish
                 break;
             case TILE_STATUS.AVAILABLE:
-            default:
                 imageSrc = Grass
+                break;
+            case TILE_STATUS.HORIZONTAL:
+                imageSrc = GrassTileHorizontal
+                break;
+            case TILE_STATUS.VERTICAL:
+                imageSrc = GrassTileVertical
+                break;
+            case TILE_STATUS.DR:
+            case TILE_STATUS.LU:
+                imageSrc = DR
+                break;
+            case TILE_STATUS.DL:
+            case TILE_STATUS.RU:
+                imageSrc = DL
+                break;
+            case TILE_STATUS.RD:
+            case TILE_STATUS.UL:
+                imageSrc = RD
+                break;
+            case TILE_STATUS.LD:
+            case TILE_STATUS.UR:
+                imageSrc = UR
+                break;
+            default:
+                imageSrc = ""
                 break;
         }
 
