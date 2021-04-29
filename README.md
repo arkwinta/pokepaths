@@ -1,5 +1,6 @@
 # Welcome to Pokepaths!
 
+Given a starting position, mark any number of blocks as "obstructed" and an endpoint, generates and displays a viable path if available.
 
 To get started, ensure you have the most recent version of node - then run `npm install` . Once that has completed, get the app going by running `npm start` and the app is served at [http://localhost:3000](http://localhost:3000)
 
